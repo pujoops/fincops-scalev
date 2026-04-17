@@ -1,0 +1,2245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fincops — Platform Jualan Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --surface2: #f5f5f7;
+    --border: #d2d2d7;
+    --border-light: #e8e8ed;
+    --text: #1d1d1f;
+    --text2: #6e6e73;
+    --text3: #aeaeb2;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --accent-light: #e8f0fe;
+    --green: #34c759;
+    --green-light: #e8faf0;
+    --red: #ff3b30;
+    --red-light: #fff0ee;
+    --orange: #ff9500;
+    --orange-light: #fff6e8;
+    --purple: #bf5af2;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-lg: 18px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+    --transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* AUTH SCREENS */
+  .auth-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f5f7 0%, #e8eaf0 100%);
+    padding: 20px;
+  }
+
+  .auth-card {
+    background: var(--surface);
+    border-radius: 24px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-light);
+    animation: fadeUp 0.4s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .auth-logo {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .logo-mark {
+    width: 56px; height: 56px;
+    background: var(--accent);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+    font-size: 24px; font-weight: 700; color: white;
+    letter-spacing: -1px;
+  }
+
+  .logo-text {
+    font-size: 22px; font-weight: 700; color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  .logo-sub { font-size: 13px; color: var(--text2); margin-top: 2px; }
+
+  .auth-title {
+    font-size: 26px; font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+
+  .auth-sub {
+    font-size: 14px; color: var(--text2);
+    text-align: center; margin-bottom: 28px;
+  }
+
+  .form-group { margin-bottom: 16px; }
+
+  label {
+    display: block;
+    font-size: 13px; font-weight: 500;
+    color: var(--text2);
+    margin-bottom: 6px;
+  }
+
+  input[type=text], input[type=email], input[type=password],
+  input[type=number], input[type=url], textarea, select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-family: inherit;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: var(--transition);
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,113,227,0.1);
+  }
+
+  textarea { resize: vertical; min-height: 80px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 15px; font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    width: 100%;
+  }
+  .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-secondary {
+    background: var(--surface2);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+  }
+  .btn-secondary:hover { background: var(--border-light); }
+
+  .btn-danger {
+    background: var(--red);
+    color: white;
+  }
+  .btn-danger:hover { opacity: 0.9; }
+
+  .btn-sm { padding: 8px 14px; font-size: 13px; }
+  .btn-xs { padding: 5px 10px; font-size: 12px; border-radius: 6px; }
+
+  .auth-switch {
+    text-align: center; margin-top: 20px;
+    font-size: 14px; color: var(--text2);
+  }
+  .auth-switch a { color: var(--accent); text-decoration: none; font-weight: 500; cursor: pointer; }
+
+  /* APP LAYOUT */
+  .app { display: none; min-height: 100vh; }
+  .app.active { display: flex; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 240px; min-height: 100vh;
+    background: var(--surface);
+    border-right: 1px solid var(--border-light);
+    display: flex; flex-direction: column;
+    position: fixed; top: 0; left: 0; height: 100vh;
+    z-index: 100;
+  }
+
+  .sidebar-logo {
+    padding: 22px 20px 16px;
+    border-bottom: 1px solid var(--border-light);
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .sidebar-logo .logo-mark { width: 34px; height: 34px; font-size: 14px; border-radius: 10px; margin: 0; }
+  .sidebar-logo .logo-text { font-size: 17px; letter-spacing: -0.3px; }
+
+  .sidebar-nav {
+    flex: 1; padding: 12px 10px;
+    overflow-y: auto;
+  }
+
+  .nav-section {
+    margin-bottom: 4px;
+  }
+
+  .nav-section-label {
+    font-size: 10px; font-weight: 600;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 8px 10px 4px;
+  }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 14px; font-weight: 500;
+    color: var(--text2);
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 1px;
+  }
+
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+  .nav-item.active { background: var(--accent-light); color: var(--accent); }
+  .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--red);
+    color: white;
+    font-size: 10px; font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 20px;
+    min-width: 18px; text-align: center;
+  }
+
+  .sidebar-footer {
+    padding: 12px 10px 16px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .user-profile {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .user-profile:hover { background: var(--surface2); }
+
+  .avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .user-info { flex: 1; min-width: 0; }
+  .user-name { font-size: 13px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .user-email { font-size: 11px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* MAIN CONTENT */
+  .main-content {
+    margin-left: 240px;
+    flex: 1;
+    min-height: 100vh;
+  }
+
+  .topbar {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-light);
+    padding: 0 28px;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 50;
+  }
+
+  .topbar-title { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; }
+  .topbar-actions { display: flex; align-items: center; gap: 10px; }
+
+  .page-content {
+    padding: 28px;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .page-content.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .card-header {
+    padding: 20px 24px 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .card-title {
+    font-size: 15px; font-weight: 600; color: var(--text);
+  }
+
+  .card-body { padding: 20px 24px; }
+
+  /* STATS GRID */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 20px 22px;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-label {
+    font-size: 12px; font-weight: 500;
+    color: var(--text2); text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-size: 26px; font-weight: 700;
+    color: var(--text); letter-spacing: -1px;
+    margin-bottom: 6px;
+  }
+
+  .stat-change {
+    font-size: 12px; font-weight: 500;
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  .stat-change.up { color: var(--green); }
+  .stat-change.down { color: var(--red); }
+
+  .stat-icon {
+    position: absolute; right: 18px; top: 18px;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; }
+
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  th {
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 11px; font-weight: 600;
+    color: var(--text2); text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border-light);
+    background: var(--surface2);
+  }
+
+  td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text);
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg); }
+
+  /* BADGE */
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 12px; font-weight: 500;
+  }
+
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-red { background: var(--red-light); color: var(--red); }
+  .badge-orange { background: var(--orange-light); color: var(--orange); }
+  .badge-blue { background: var(--accent-light); color: var(--accent); }
+  .badge-purple { background: #f5eeff; color: var(--purple); }
+
+  /* GRID LAYOUTS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  /* PRODUCT CARDS */
+  .product-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+  }
+  .product-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+
+  .product-thumb {
+    height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+    background: linear-gradient(135deg, var(--accent-light), #e8f4fd);
+  }
+
+  .product-info { padding: 16px; }
+  .product-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .product-price { font-size: 17px; font-weight: 700; color: var(--accent); margin-bottom: 8px; }
+  .product-meta { font-size: 12px; color: var(--text2); display: flex; gap: 12px; margin-bottom: 12px; }
+  .product-actions { display: flex; gap: 8px; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--surface);
+    border-radius: 20px;
+    width: 100%; max-width: 540px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+  }
+  .modal-overlay.open .modal { transform: scale(1); }
+
+  .modal-header {
+    padding: 22px 24px 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .modal-title { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+
+  .modal-close {
+    width: 30px; height: 30px;
+    background: var(--surface2); border: none;
+    border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--text2);
+    transition: var(--transition);
+  }
+  .modal-close:hover { background: var(--border-light); }
+
+  .modal-body { padding: 20px 24px 28px; }
+
+  /* CHART */
+  .chart-wrap { position: relative; height: 180px; }
+
+  canvas { max-width: 100%; }
+
+  /* TOGGLE */
+  .toggle-wrap { display: flex; align-items: center; gap: 10px; }
+  .toggle {
+    width: 44px; height: 26px;
+    background: var(--border);
+    border-radius: 13px;
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+    flex-shrink: 0;
+  }
+  .toggle.on { background: var(--green); }
+  .toggle::after {
+    content: '';
+    width: 20px; height: 20px;
+    background: white;
+    border-radius: 50%;
+    position: absolute; top: 3px; left: 3px;
+    transition: var(--transition);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .toggle.on::after { left: 21px; }
+
+  /* TABS */
+  .tabs {
+    display: flex; gap: 4px;
+    background: var(--surface2);
+    border-radius: var(--radius-sm);
+    padding: 3px;
+    margin-bottom: 20px;
+  }
+
+  .tab {
+    flex: 1; padding: 8px;
+    border-radius: 6px;
+    font-size: 13px; font-weight: 500;
+    border: none; cursor: pointer;
+    background: transparent; color: var(--text2);
+    transition: var(--transition);
+    text-align: center;
+  }
+  .tab.active { background: white; color: var(--text); box-shadow: var(--shadow); }
+
+  /* LP BUILDER */
+  .lp-builder { display: grid; grid-template-columns: 260px 1fr; gap: 0; min-height: calc(100vh - 120px); }
+
+  .lp-sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border-light);
+    padding: 16px;
+    overflow-y: auto;
+  }
+
+  .lp-sidebar h4 { font-size: 12px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; font-weight: 600; }
+
+  .block-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin-bottom: 6px;
+    cursor: grab;
+    font-size: 13px; font-weight: 500;
+    background: var(--surface);
+    transition: var(--transition);
+  }
+  .block-item:hover { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+
+  .lp-canvas {
+    padding: 24px;
+    background: var(--bg);
+    overflow-y: auto;
+  }
+
+  .lp-preview {
+    background: white;
+    border-radius: var(--radius-lg);
+    min-height: 500px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .lp-block {
+    position: relative;
+    border: 2px solid transparent;
+    transition: var(--transition);
+  }
+  .lp-block:hover { border-color: var(--accent); }
+
+  .lp-block-controls {
+    position: absolute; top: 8px; right: 8px;
+    display: none; gap: 4px;
+    z-index: 10;
+  }
+  .lp-block:hover .lp-block-controls { display: flex; }
+
+  .block-ctrl-btn {
+    width: 28px; height: 28px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    transition: var(--transition);
+  }
+  .block-ctrl-btn:hover { background: var(--red); color: white; border-color: var(--red); }
+
+  /* CHECKOUT PREVIEW */
+  .checkout-preview {
+    max-width: 500px;
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    margin: 0 auto;
+  }
+
+  /* ORDER STATUS */
+  .order-timeline {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .timeline-item {
+    display: flex; gap: 12px;
+    align-items: flex-start;
+  }
+
+  .timeline-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .timeline-dot.pending { background: var(--orange); }
+
+  /* AFFILIATE */
+  .affiliate-link-box {
+    background: var(--surface2);
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+    color: var(--text2);
+  }
+
+  .copy-btn {
+    margin-left: auto;
+    flex-shrink: 0;
+    padding: 6px 12px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: var(--transition);
+  }
+  .copy-btn:hover { background: var(--accent-hover); }
+
+  /* FORM ROWS */
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .divider {
+    height: 1px;
+    background: var(--border-light);
+    margin: 20px 0;
+  }
+
+  .section-title {
+    font-size: 20px; font-weight: 700;
+    letter-spacing: -0.5px; margin-bottom: 4px;
+  }
+
+  .section-sub { font-size: 14px; color: var(--text2); margin-bottom: 20px; }
+
+  /* ALERTS */
+  .alert {
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .alert-success { background: var(--green-light); color: #1a7a3c; border: 1px solid #a3d9b1; }
+  .alert-error { background: var(--red-light); color: #c0392b; border: 1px solid #f5b7b1; }
+  .alert-info { background: var(--accent-light); color: var(--accent); border: 1px solid #a8cbf5; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center; padding: 60px 20px;
+    color: var(--text2);
+  }
+  .empty-icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .empty-sub { font-size: 14px; margin-bottom: 20px; }
+
+  /* SETTINGS */
+  .settings-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .settings-row:last-child { border-bottom: none; }
+  .settings-label { font-size: 14px; font-weight: 500; }
+  .settings-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+  /* MINI CHART BARS */
+  .mini-bar-chart {
+    display: flex; align-items: flex-end; gap: 4px;
+    height: 50px;
+  }
+  .mini-bar {
+    flex: 1;
+    border-radius: 3px 3px 0 0;
+    background: var(--accent-light);
+    transition: var(--transition);
+    position: relative;
+  }
+  .mini-bar.today { background: var(--accent); }
+  .mini-bar:hover { opacity: 0.8; }
+
+  /* LP BLOCKS PREVIEW STYLES */
+  .lp-hero { padding: 60px 40px; text-align: center; background: linear-gradient(135deg, #f0f4ff, #e8f0fe); }
+  .lp-hero h1 { font-size: 32px; font-weight: 800; margin-bottom: 12px; letter-spacing: -1px; }
+  .lp-hero p { font-size: 16px; color: #555; margin-bottom: 24px; }
+  .lp-hero .cta { background: #0071e3; color: white; padding: 14px 32px; border-radius: 50px; font-size: 16px; font-weight: 600; border: none; cursor: pointer; }
+
+  .lp-text-block { padding: 40px; }
+  .lp-text-block h2 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+  .lp-text-block p { font-size: 15px; color: #555; line-height: 1.6; }
+
+  .lp-image-block { padding: 20px 40px; text-align: center; }
+  .lp-image-block .img-placeholder { width: 100%; height: 200px; background: var(--surface2); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text2); font-size: 14px; border: 2px dashed var(--border); }
+
+  .lp-cta-block { padding: 40px; text-align: center; background: linear-gradient(135deg, #0071e3, #0077ed); color: white; }
+  .lp-cta-block h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .lp-cta-block p { opacity: 0.8; margin-bottom: 20px; }
+  .lp-cta-block button { background: white; color: #0071e3; padding: 12px 28px; border-radius: 50px; font-size: 15px; font-weight: 600; border: none; cursor: pointer; }
+
+  .lp-countdown-block { padding: 30px 40px; text-align: center; }
+  .countdown-timers { display: flex; justify-content: center; gap: 16px; margin-top: 12px; }
+  .countdown-unit { background: var(--text); color: white; border-radius: 10px; padding: 12px 18px; min-width: 60px; }
+  .countdown-num { font-size: 24px; font-weight: 700; }
+  .countdown-label { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; }
+
+  .lp-testimonial-block { padding: 40px; background: var(--surface2); }
+  .lp-testimonial-block h2 { font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 20px; }
+  .testimonial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .testi-card { background: white; padding: 16px; border-radius: 12px; }
+  .testi-name { font-weight: 600; font-size: 13px; margin-bottom: 4px; }
+  .testi-text { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+  .lp-faq-block { padding: 40px; }
+  .lp-faq-block h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+  .faq-item { border-bottom: 1px solid var(--border-light); padding: 12px 0; }
+  .faq-q { font-weight: 500; font-size: 14px; cursor: pointer; }
+  .faq-a { font-size: 13px; color: var(--text2); margin-top: 6px; line-height: 1.5; }
+
+  /* NOTIFICATION */
+  .notif {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--text);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    z-index: 9999;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    display: flex; align-items: center; gap: 8px;
+    box-shadow: var(--shadow-lg);
+  }
+  .notif.show { transform: translateY(0); opacity: 1; }
+
+  /* LMS */
+  .lms-module {
+    border: 1.5px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .lms-module-header {
+    padding: 14px 16px;
+    background: var(--surface);
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer;
+    font-weight: 500; font-size: 14px;
+  }
+  .lms-module-body {
+    padding: 12px 16px;
+    background: var(--surface2);
+    display: none;
+  }
+  .lms-module-body.open { display: block; }
+  .lms-lesson {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .lms-lesson:last-child { border-bottom: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .sidebar { width: 60px; }
+    .sidebar-logo .logo-text, .nav-item span, .sidebar-footer .user-info, .nav-section-label { display: none; }
+    .main-content { margin-left: 60px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .lp-builder { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======== AUTH: LOGIN ======== -->
+<div class="auth-screen" id="loginScreen">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-mark">Fc</div>
+      <div class="logo-text">Fincops</div>
+      <div class="logo-sub">Platform Jualan Digital</div>
+    </div>
+    <div class="auth-title">Masuk ke akun</div>
+    <div class="auth-sub">Selamat datang kembali 👋</div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="loginEmail" placeholder="email@kamu.com" value="demo@fincops.id">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" value="password">
+    </div>
+    <button class="btn btn-primary" onclick="doLogin()">Masuk</button>
+    <div class="auth-switch">Belum punya akun? <a onclick="showScreen('registerScreen')">Daftar gratis</a></div>
+    <div class="auth-switch" style="margin-top:8px"><a style="color:var(--text2)" onclick="showScreen('forgotScreen')">Lupa password?</a></div>
+  </div>
+</div>
+
+<!-- ======== AUTH: REGISTER ======== -->
+<div class="auth-screen" id="registerScreen" style="display:none">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <div class="logo-mark">Fc</div>
+      <div class="logo-text">Fincops</div>
+    </div>
+    <div class="auth-title">Buat akun gratis</div>
+    <div class="auth-sub">Mulai jualan digital sekarang 🚀</div>
+    <div class="form-row">
+      <div class="form-group"><label>Nama Toko</label><input type="text" id="regStore" placeholder="Nama tokomu"></div>
+      <div class="form-group"><label>Nama Lengkap</label><input type="text" id="regName" placeholder="Nama kamu"></div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" id="regEmail" placeholder="email@kamu.com"></div>
+    <div class="form-group"><label>Password</label><input type="password" id="regPass" placeholder="Min. 8 karakter"></div>
+    <button class="btn btn-primary" onclick="doRegister()">Buat Akun Gratis</button>
+    <div class="auth-switch">Sudah punya akun? <a onclick="showScreen('loginScreen')">Masuk</a></div>
+  </div>
+</div>
+
+<!-- ======== AUTH: FORGOT ======== -->
+<div class="auth-screen" id="forgotScreen" style="display:none">
+  <div class="auth-card">
+    <div class="auth-logo"><div class="logo-mark">Fc</div></div>
+    <div class="auth-title">Reset Password</div>
+    <div class="auth-sub">Masukkan email untuk mendapat link reset</div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="email@kamu.com"></div>
+    <button class="btn btn-primary" onclick="notify('📧 Link reset dikirim ke email kamu!')">Kirim Link Reset</button>
+    <div class="auth-switch"><a onclick="showScreen('loginScreen')">← Kembali ke login</a></div>
+  </div>
+</div>
+
+<!-- ======== MAIN APP ======== -->
+<div class="app" id="mainApp">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">Fc</div>
+      <div class="logo-text">Fincops</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-label">Utama</div>
+        <div class="nav-item active" onclick="showPage('dashboard', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <span>Dashboard</span>
+        </div>
+        <div class="nav-item" onclick="showPage('orders', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          <span>Order</span>
+          <span class="nav-badge" id="orderBadge">3</span>
+        </div>
+        <div class="nav-item" onclick="showPage('products', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-8-4-8 4m16 0v10l-8 4m-8-4V7m16 10l-8-4m-8 4l8-4"/></svg>
+          <span>Produk</span>
+        </div>
+        <div class="nav-item" onclick="showPage('landing', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+          <span>Landing Page</span>
+        </div>
+        <div class="nav-item" onclick="showPage('lms', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+          <span>LMS / Kelas</span>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Marketing</div>
+        <div class="nav-item" onclick="showPage('affiliate', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <span>Afiliasi</span>
+        </div>
+        <div class="nav-item" onclick="showPage('analytics', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+          <span>Analitik</span>
+        </div>
+        <div class="nav-item" onclick="showPage('email', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>Email Follow-up</span>
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Akun</div>
+        <div class="nav-item" onclick="showPage('settings', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          <span>Pengaturan</span>
+        </div>
+        <div class="nav-item" onclick="showPage('withdrawal', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          <span>Withdrawal</span>
+        </div>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-profile" onclick="showPage('settings', document.querySelector('.nav-item'))">
+        <div class="avatar" id="sidebarAvatar">A</div>
+        <div class="user-info">
+          <div class="user-name" id="sidebarName">Admin Fincops</div>
+          <div class="user-email" id="sidebarEmail">demo@fincops.id</div>
+        </div>
+      </div>
+      <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:8px" onclick="doLogout()">Keluar</button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">Dashboard</div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary btn-sm" onclick="notify('🔔 Tidak ada notifikasi baru')">🔔</button>
+        <button class="btn btn-primary btn-sm" onclick="showModal('addProductModal')">+ Produk Baru</button>
+      </div>
+    </div>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div class="page-content active" id="page-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Revenue</div>
+          <div class="stat-value" id="stat-revenue">Rp 0</div>
+          <div class="stat-change up">↑ 24% bulan ini</div>
+          <div class="stat-icon" style="background:#e8f4fe">💰</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Order</div>
+          <div class="stat-value" id="stat-orders">0</div>
+          <div class="stat-change up">↑ 18% bulan ini</div>
+          <div class="stat-icon" style="background:#e8faf0">📦</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Produk</div>
+          <div class="stat-value" id="stat-products">0</div>
+          <div class="stat-change up">↑ 2 produk baru</div>
+          <div class="stat-icon" style="background:#f5eeff">🛍️</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Saldo Aktif</div>
+          <div class="stat-value" id="stat-balance">Rp 0</div>
+          <div class="stat-change">Siap dicairkan</div>
+          <div class="stat-icon" style="background:#fff6e8">🏦</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:20px">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Revenue 7 Hari Terakhir</div>
+          </div>
+          <div class="card-body">
+            <div class="mini-bar-chart" id="revenueChart"></div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-top:6px" id="chartDays"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Order Terbaru</div>
+          </div>
+          <div class="card-body" id="recentOrdersWidget" style="padding-top:0">
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Produk Terlaris</div></div>
+          <div class="card-body" id="topProductsWidget" style="padding-top:0"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Aktivitas Terkini</div></div>
+          <div class="card-body" id="activityWidget" style="padding-top:0"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ORDERS ===== -->
+    <div class="page-content" id="page-orders">
+      <div class="section-title">Manajemen Order</div>
+      <div class="section-sub">Pantau dan kelola semua pesanan kamu</div>
+
+      <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+        <input type="text" placeholder="🔍 Cari order, nama, email..." style="max-width:280px" oninput="filterOrders(this.value)">
+        <select onchange="filterOrderStatus(this.value)" style="max-width:160px">
+          <option value="">Semua Status</option>
+          <option value="Lunas">Lunas</option>
+          <option value="Pending">Pending</option>
+          <option value="Gagal">Gagal</option>
+        </select>
+        <button class="btn btn-secondary btn-sm" onclick="exportOrders()">⬇️ Export CSV</button>
+        <button class="btn btn-primary btn-sm" onclick="showModal('addOrderModal')">+ Order Manual</button>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap">
+          <table id="ordersTable">
+            <thead>
+              <tr>
+                <th>ID Order</th>
+                <th>Nama Pembeli</th>
+                <th>Email</th>
+                <th>Produk</th>
+                <th>Total</th>
+                <th>Metode</th>
+                <th>Status</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PRODUCTS ===== -->
+    <div class="page-content" id="page-products">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div>
+          <div class="section-title">Produk Digital</div>
+          <div class="section-sub" style="margin-bottom:0">Kelola semua produk digitalmu</div>
+        </div>
+        <button class="btn btn-primary" onclick="showModal('addProductModal')">+ Produk Baru</button>
+      </div>
+      <div class="grid-3" id="productsGrid"></div>
+    </div>
+
+    <!-- ===== LANDING PAGE BUILDER ===== -->
+    <div class="page-content" id="page-landing">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div>
+          <div class="section-title">Landing Page Builder</div>
+          <div class="section-sub" style="margin-bottom:0">Drag & drop block untuk bangun halaman penjualan</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <select id="lpProductSelect" style="max-width:200px">
+            <option value="">Pilih Produk...</option>
+          </select>
+          <button class="btn btn-secondary btn-sm" onclick="previewLP()">👁 Preview</button>
+          <button class="btn btn-primary btn-sm" onclick="saveLPBlocks()">💾 Simpan & Publish</button>
+        </div>
+      </div>
+
+      <div class="lp-builder card" style="overflow:visible">
+        <!-- Block Palette -->
+        <div class="lp-sidebar">
+          <h4 style="margin-bottom:10px">Block tersedia</h4>
+          <div class="block-item" draggable="true" data-block="hero" ondragstart="onDragStart(event, 'hero')">🏠 Hero / Header</div>
+          <div class="block-item" draggable="true" data-block="text" ondragstart="onDragStart(event, 'text')">📝 Teks & Judul</div>
+          <div class="block-item" draggable="true" data-block="image" ondragstart="onDragStart(event, 'image')">🖼 Gambar</div>
+          <div class="block-item" draggable="true" data-block="cta" ondragstart="onDragStart(event, 'cta')">🎯 Call to Action</div>
+          <div class="block-item" draggable="true" data-block="countdown" ondragstart="onDragStart(event, 'countdown')">⏰ Countdown Timer</div>
+          <div class="block-item" draggable="true" data-block="testimonial" ondragstart="onDragStart(event, 'testimonial')">⭐ Testimonial</div>
+          <div class="block-item" draggable="true" data-block="faq" ondragstart="onDragStart(event, 'faq')">❓ FAQ</div>
+          <div class="block-item" draggable="true" data-block="form" ondragstart="onDragStart(event, 'form')">📋 Form Order</div>
+          <div style="margin-top:20px">
+            <h4>Landing Pages</h4>
+            <div id="lpList" style="font-size:13px;color:var(--text2)">Belum ada LP</div>
+          </div>
+        </div>
+
+        <!-- Canvas -->
+        <div class="lp-canvas" ondragover="event.preventDefault()" ondrop="onDrop(event)">
+          <div style="text-align:center;color:var(--text2);font-size:13px;margin-bottom:12px">
+            ↕ Drag block ke sini untuk menambahkan konten
+          </div>
+          <div class="lp-preview" id="lpCanvas">
+            <div style="padding:60px;text-align:center;color:var(--text2)">
+              <div style="font-size:40px;margin-bottom:12px">🎨</div>
+              <div style="font-size:16px;font-weight:600;margin-bottom:6px">Canvas kosong</div>
+              <div style="font-size:13px">Drag block dari panel kiri untuk mulai membangun landing page</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== LMS ===== -->
+    <div class="page-content" id="page-lms">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div>
+          <div class="section-title">LMS / Member Area</div>
+          <div class="section-sub" style="margin-bottom:0">Kelola kelas & modul digitalmu</div>
+        </div>
+        <button class="btn btn-primary" onclick="showModal('addCourseModal')">+ Buat Kelas</button>
+      </div>
+
+      <div id="courseList">
+        <div class="empty-state">
+          <div class="empty-icon">🎓</div>
+          <div class="empty-title">Belum ada kelas</div>
+          <div class="empty-sub">Buat kelas pertamamu dan tambahkan modul materi</div>
+          <button class="btn btn-primary" onclick="showModal('addCourseModal')">+ Buat Kelas Pertama</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== AFFILIATE ===== -->
+    <div class="page-content" id="page-affiliate">
+      <div class="section-title">Sistem Afiliasi</div>
+      <div class="section-sub">Biarkan orang lain promosikan produkmu dan dapat komisi</div>
+
+      <div class="grid-2" style="margin-bottom:20px">
+        <div class="stat-card">
+          <div class="stat-label">Total Afiliator</div>
+          <div class="stat-value" id="aff-total">0</div>
+          <div class="stat-icon" style="background:#e8faf0">👥</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Komisi Terbayar</div>
+          <div class="stat-value" id="aff-paid">Rp 0</div>
+          <div class="stat-icon" style="background:#fff6e8">💸</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Pengaturan Afiliasi</div></div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Komisi Default (%)</label>
+              <input type="number" id="affCommission" value="20" min="1" max="80">
+            </div>
+            <div class="form-group">
+              <label>Cookie Duration (hari)</label>
+              <input type="number" id="affCookie" value="30" min="1">
+            </div>
+            <div class="settings-row" style="padding:12px 0">
+              <div><div class="settings-label">Afiliasi Aktif</div><div class="settings-sub">Aktifkan program afiliasi</div></div>
+              <button class="toggle on" id="affToggle" onclick="this.classList.toggle('on')"></button>
+            </div>
+            <button class="btn btn-primary" style="margin-top:8px" onclick="saveAffSettings()">Simpan Pengaturan</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Link Afiliasi per Produk</div></div>
+          <div class="card-body">
+            <div id="affLinks"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <div class="card-header"><div class="card-title">Daftar Afiliator</div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nama</th><th>Email</th><th>Klik</th><th>Konversi</th><th>Komisi</th><th>Status</th><th>Aksi</th></tr></thead>
+            <tbody id="affiliatorBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ANALYTICS ===== -->
+    <div class="page-content" id="page-analytics">
+      <div class="section-title">Analitik</div>
+      <div class="section-sub">Pantau performa jualan & konversimu secara real-time</div>
+
+      <div class="tabs">
+        <button class="tab active" onclick="switchAnalyticsTab('overview', this)">Overview</button>
+        <button class="tab" onclick="switchAnalyticsTab('products', this)">Per Produk</button>
+        <button class="tab" onclick="switchAnalyticsTab('traffic', this)">Traffic</button>
+      </div>
+
+      <div id="analytics-overview">
+        <div class="stats-grid" style="margin-bottom:20px">
+          <div class="stat-card"><div class="stat-label">Total Pengunjung LP</div><div class="stat-value">2,847</div><div class="stat-change up">↑ 32%</div></div>
+          <div class="stat-card"><div class="stat-label">Conversion Rate</div><div class="stat-value">4.8%</div><div class="stat-change up">↑ 0.6%</div></div>
+          <div class="stat-card"><div class="stat-label">Avg. Order Value</div><div class="stat-value">Rp 187K</div><div class="stat-change down">↓ 2%</div></div>
+          <div class="stat-card"><div class="stat-label">Refund Rate</div><div class="stat-value">0.3%</div><div class="stat-change up">↓ Baik</div></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Grafik Revenue 30 Hari</div></div>
+          <div class="card-body">
+            <div id="bigChart" style="height:200px;display:flex;align-items:flex-end;gap:3px"></div>
+          </div>
+        </div>
+      </div>
+      <div id="analytics-products" style="display:none">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Performa Per Produk</div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Produk</th><th>Pengunjung</th><th>Order</th><th>Konversi</th><th>Revenue</th></tr></thead>
+              <tbody id="analyticsProductBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div id="analytics-traffic" style="display:none">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Sumber Traffic</div></div>
+          <div class="card-body" id="trafficSources"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== EMAIL FOLLOW-UP ===== -->
+    <div class="page-content" id="page-email">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div>
+          <div class="section-title">Email Follow-up</div>
+          <div class="section-sub" style="margin-bottom:0">Otomatisasi pengiriman email ke pembeli</div>
+        </div>
+        <button class="btn btn-primary" onclick="showModal('addEmailModal')">+ Tambah Sequence</button>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:20px">
+        <div class="stat-card"><div class="stat-label">Email Terkirim</div><div class="stat-value">1,284</div><div class="stat-icon" style="background:#e8f4fe">📨</div></div>
+        <div class="stat-card"><div class="stat-label">Open Rate</div><div class="stat-value">38.2%</div><div class="stat-icon" style="background:#e8faf0">📬</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">Email Sequence</div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nama</th><th>Trigger</th><th>Delay</th><th>Terkirim</th><th>Open Rate</th><th>Status</th><th>Aksi</th></tr></thead>
+            <tbody id="emailBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SETTINGS ===== -->
+    <div class="page-content" id="page-settings">
+      <div class="section-title">Pengaturan</div>
+      <div class="section-sub">Konfigurasi toko dan akun Fincops kamu</div>
+
+      <div class="grid-2">
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-header"><div class="card-title">Profil Toko</div></div>
+          <div class="card-body">
+            <div class="form-group"><label>Nama Toko</label><input type="text" id="settingStoreName" value="Toko Fincops Demo"></div>
+            <div class="form-group"><label>Deskripsi</label><textarea id="settingStoreDesc" rows="2">Platform jualan digital terbaik</textarea></div>
+            <div class="form-group"><label>Email Bisnis</label><input type="email" id="settingEmail" value="demo@fincops.id"></div>
+            <div class="form-group"><label>No. WhatsApp</label><input type="text" id="settingWA" placeholder="08xxxxxxxxxx"></div>
+            <div class="form-group"><label>Custom Domain</label><input type="text" id="settingDomain" placeholder="tokoku.com"></div>
+            <button class="btn btn-primary" onclick="saveSettings()">Simpan Profil</button>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-header"><div class="card-title">Integrasi Payment</div></div>
+            <div class="card-body">
+              <div class="settings-row">
+                <div><div class="settings-label">Midtrans</div><div class="settings-sub">QRIS, VA, e-Wallet</div></div>
+                <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+              </div>
+              <div class="form-group" style="margin-top:12px"><label>Server Key</label><input type="password" placeholder="SB-Mid-server-xxxx" value="SB-Mid-server-demo"></div>
+              <div class="form-group"><label>Client Key</label><input type="text" placeholder="SB-Mid-client-xxxx" value="SB-Mid-client-demo"></div>
+              <button class="btn btn-secondary btn-sm" onclick="notify('✅ Koneksi Midtrans berhasil!')">Test Koneksi</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">Integrasi Pixel</div></div>
+            <div class="card-body">
+              <div class="form-group"><label>Meta Pixel ID</label><input type="text" placeholder="1234567890123456"></div>
+              <div class="form-group"><label>TikTok Pixel ID</label><input type="text" placeholder="ABCDEF123456"></div>
+              <div class="form-group"><label>Google Analytics ID</label><input type="text" placeholder="G-XXXXXXXXXX"></div>
+              <button class="btn btn-primary btn-sm" onclick="notify('✅ Pixel tersimpan!')">Simpan Pixel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== WITHDRAWAL ===== -->
+    <div class="page-content" id="page-withdrawal">
+      <div class="section-title">Withdrawal Saldo</div>
+      <div class="section-sub">Cairkan saldo ke rekening bankmu</div>
+
+      <div class="stats-grid" style="margin-bottom:24px">
+        <div class="stat-card"><div class="stat-label">Saldo Aktif</div><div class="stat-value" id="wd-balance">Rp 0</div><div class="stat-change">Siap dicairkan</div></div>
+        <div class="stat-card"><div class="stat-label">Total Dicairkan</div><div class="stat-value" id="wd-total">Rp 0</div><div class="stat-change">Sepanjang waktu</div></div>
+        <div class="stat-card"><div class="stat-label">Dalam Proses</div><div class="stat-value">Rp 0</div><div class="stat-change">0-3 hari kerja</div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Ajukan Withdrawal</div></div>
+          <div class="card-body">
+            <div class="form-group"><label>Bank</label>
+              <select><option>BCA</option><option>BRI</option><option>BNI</option><option>Mandiri</option><option>DANA</option><option>OVO</option></select>
+            </div>
+            <div class="form-group"><label>No. Rekening</label><input type="text" placeholder="1234567890" id="wdAccount"></div>
+            <div class="form-group"><label>Atas Nama</label><input type="text" placeholder="Nama sesuai rekening" id="wdName"></div>
+            <div class="form-group"><label>Jumlah (Rp)</label><input type="number" placeholder="Minimum Rp 50.000" id="wdAmount" min="50000"></div>
+            <div class="alert alert-info">💡 Minimal withdrawal Rp 50.000. Proses 1-3 hari kerja.</div>
+            <button class="btn btn-primary" onclick="doWithdrawal()">Ajukan Withdrawal</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Riwayat Withdrawal</div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Tanggal</th><th>Jumlah</th><th>Bank</th><th>Status</th></tr></thead>
+              <tbody id="wdHistory"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- end main-content -->
+</div><!-- end app -->
+
+<!-- ======== MODALS ======== -->
+
+<!-- Add Product Modal -->
+<div class="modal-overlay" id="addProductModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Tambah Produk Digital</div>
+      <button class="modal-close" onclick="closeModal('addProductModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="tabs">
+        <button class="tab active" onclick="switchProdTab('digital', this)">Digital</button>
+        <button class="tab" onclick="switchProdTab('lms', this)">LMS / Kelas</button>
+        <button class="tab" onclick="switchProdTab('link', this)">Link Akses</button>
+      </div>
+      <div id="prod-tab-digital">
+        <div class="form-group"><label>Nama Produk *</label><input type="text" id="prodName" placeholder="e.g. Ebook Marketing Ampuh"></div>
+        <div class="form-row">
+          <div class="form-group"><label>Harga (Rp) *</label><input type="number" id="prodPrice" placeholder="97000"></div>
+          <div class="form-group"><label>Harga Coret (Rp)</label><input type="number" id="prodOrigPrice" placeholder="197000"></div>
+        </div>
+        <div class="form-group"><label>Deskripsi</label><textarea id="prodDesc" placeholder="Deskripsi produk..."></textarea></div>
+        <div class="form-group"><label>Kategori</label>
+          <select id="prodCat"><option>E-Book</option><option>Template</option><option>Video Course</option><option>Software/Tools</option><option>Kelas Online</option><option>Lainnya</option></select>
+        </div>
+        <div class="form-group"><label>Upload File Produk</label><input type="file" id="prodFile" accept=".pdf,.zip,.mp4,.docx,.xlsx"></div>
+        <div class="form-group"><label>Atau URL File (Google Drive / Dropbox)</label><input type="url" id="prodUrl" placeholder="https://..."></div>
+        <div class="form-group"><label>Thumbnail Emoji</label><input type="text" id="prodEmoji" placeholder="📚" value="📦" maxlength="2"></div>
+      </div>
+      <div id="prod-tab-lms" style="display:none">
+        <div class="form-group"><label>Nama Kelas</label><input type="text" placeholder="e.g. Kelas Copywriting Pro"></div>
+        <div class="form-group"><label>Harga (Rp)</label><input type="number" placeholder="297000"></div>
+        <div class="form-group"><label>Deskripsi Kelas</label><textarea placeholder="Apa yang akan dipelajari..."></textarea></div>
+        <div class="alert alert-info">💡 Setelah buat produk, kamu bisa tambah modul & lesson di menu LMS.</div>
+      </div>
+      <div id="prod-tab-link" style="display:none">
+        <div class="form-group"><label>Nama Produk</label><input type="text" placeholder="e.g. Akses Komunitas Premium"></div>
+        <div class="form-group"><label>Harga (Rp)</label><input type="number" placeholder="97000"></div>
+        <div class="form-group"><label>Link Akses (akan dikirim ke buyer)</label><input type="url" placeholder="https://t.me/grupkamu"></div>
+      </div>
+      <button class="btn btn-primary" onclick="addProduct()" style="margin-top:4px">✅ Simpan Produk</button>
+    </div>
+  </div>
+</div>
+
+<!-- Order Detail Modal -->
+<div class="modal-overlay" id="orderDetailModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="orderDetailTitle">Detail Order</div>
+      <button class="modal-close" onclick="closeModal('orderDetailModal')">✕</button>
+    </div>
+    <div class="modal-body" id="orderDetailBody"></div>
+  </div>
+</div>
+
+<!-- Add Order Manual Modal -->
+<div class="modal-overlay" id="addOrderModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Tambah Order Manual</div>
+      <button class="modal-close" onclick="closeModal('addOrderModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label>Nama Pembeli</label><input type="text" id="manualName" placeholder="Nama pembeli"></div>
+      <div class="form-group"><label>Email Pembeli</label><input type="email" id="manualEmail" placeholder="email@pembeli.com"></div>
+      <div class="form-group"><label>No. WhatsApp</label><input type="text" id="manualWA" placeholder="08xx"></div>
+      <div class="form-group"><label>Produk</label><select id="manualProduct"></select></div>
+      <div class="form-group"><label>Status</label><select id="manualStatus"><option>Lunas</option><option>Pending</option></select></div>
+      <button class="btn btn-primary" onclick="addManualOrder()">Simpan Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Course Modal -->
+<div class="modal-overlay" id="addCourseModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Buat Kelas Baru</div>
+      <button class="modal-close" onclick="closeModal('addCourseModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label>Nama Kelas *</label><input type="text" id="courseName" placeholder="e.g. Kelas Copywriting Pro"></div>
+      <div class="form-group"><label>Deskripsi</label><textarea id="courseDesc" placeholder="Apa yang akan dipelajari..."></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label>Harga (Rp)</label><input type="number" id="coursePrice" placeholder="297000"></div>
+        <div class="form-group"><label>Emoji</label><input type="text" id="courseEmoji" value="🎓" maxlength="2"></div>
+      </div>
+      <button class="btn btn-primary" onclick="addCourse()">Buat Kelas</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Email Sequence Modal -->
+<div class="modal-overlay" id="addEmailModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Tambah Email Sequence</div>
+      <button class="modal-close" onclick="closeModal('addEmailModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label>Nama Sequence</label><input type="text" id="seqName" placeholder="e.g. Welcome Email"></div>
+      <div class="form-group"><label>Trigger</label>
+        <select id="seqTrigger"><option>Setelah Pembelian</option><option>Order Pending</option><option>Order Gagal</option><option>7 Hari Setelah Beli</option></select>
+      </div>
+      <div class="form-group"><label>Delay (jam)</label><input type="number" id="seqDelay" value="0" min="0"></div>
+      <div class="form-group"><label>Subject Email</label><input type="text" id="seqSubject" placeholder="Selamat! Akses produkmu sudah siap"></div>
+      <div class="form-group"><label>Isi Email</label><textarea id="seqBody" rows="5" placeholder="Hai {{nama}}, terima kasih sudah beli...&#10;&#10;Link akses: {{link_produk}}"></textarea></div>
+      <div class="alert alert-info">💡 Gunakan {{nama}}, {{email}}, {{produk}}, {{link_produk}} sebagai variabel dinamis.</div>
+      <button class="btn btn-primary" onclick="addEmailSeq()">Simpan Sequence</button>
+    </div>
+  </div>
+</div>
+
+<!-- Notification Toast -->
+<div class="notif" id="notifToast">✅ <span id="notifMsg"></span></div>
+
+<!-- ======== SCRIPTS ======== -->
+<script>
+// ============= STATE =============
+const DB = {
+  user: null,
+  products: [],
+  orders: [],
+  courses: [],
+  emails: [],
+  affiliators: [],
+  lpBlocks: [],
+  balance: 0,
+  withdrawn: 0,
+};
+
+// ============= AUTH =============
+function showScreen(id) {
+  document.querySelectorAll('.auth-screen').forEach(s => s.style.display = 'none');
+  const t = document.getElementById(id);
+  if (t) t.style.display = 'flex';
+}
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const pass = document.getElementById('loginPass').value;
+  if (!email || !pass) { notify('❌ Isi email dan password dulu!'); return; }
+  DB.user = { name: 'Admin Fincops', email, avatar: email[0].toUpperCase() };
+  document.getElementById('sidebarAvatar').textContent = DB.user.avatar;
+  document.getElementById('sidebarName').textContent = DB.user.name;
+  document.getElementById('sidebarEmail').textContent = email;
+  document.querySelectorAll('.auth-screen').forEach(s => s.style.display = 'none');
+  document.getElementById('mainApp').classList.add('active');
+  loadDemoData();
+  refreshDashboard();
+  notify('👋 Selamat datang di Fincops!');
+}
+
+function doRegister() {
+  const name = document.getElementById('regName').value;
+  const store = document.getElementById('regStore').value;
+  const email = document.getElementById('regEmail').value;
+  const pass = document.getElementById('regPass').value;
+  if (!name || !store || !email || !pass) { notify('❌ Lengkapi semua field!'); return; }
+  if (pass.length < 8) { notify('❌ Password minimal 8 karakter!'); return; }
+  DB.user = { name, email, store, avatar: name[0].toUpperCase() };
+  document.getElementById('sidebarAvatar').textContent = DB.user.avatar;
+  document.getElementById('sidebarName').textContent = name;
+  document.getElementById('sidebarEmail').textContent = email;
+  document.querySelectorAll('.auth-screen').forEach(s => s.style.display = 'none');
+  document.getElementById('mainApp').classList.add('active');
+  refreshDashboard();
+  notify('🎉 Akun berhasil dibuat! Selamat bergabung di Fincops!');
+}
+
+function doLogout() {
+  document.getElementById('mainApp').classList.remove('active');
+  showScreen('loginScreen');
+}
+
+// ============= DEMO DATA =============
+function loadDemoData() {
+  DB.products = [
+    { id:'p1', name:'Ebook Copywriting Pro', price:97000, origPrice:197000, desc:'Panduan lengkap copywriting untuk pemula hingga pro', cat:'E-Book', emoji:'📚', sales:48, url:'', status:'active' },
+    { id:'p2', name:'Template CV Premium', price:49000, origPrice:99000, desc:'100+ template CV profesional siap pakai', cat:'Template', emoji:'📄', sales:127, url:'', status:'active' },
+    { id:'p3', name:'Kelas Meta Ads Mastery', price:297000, origPrice:497000, desc:'Belajar Meta Ads dari nol sampai bisa ROAS 5x', cat:'Kelas Online', emoji:'🎯', sales:33, url:'', status:'active' },
+    { id:'p4', name:'Pack Preset Lightroom', price:35000, origPrice:75000, desc:'50 preset Lightroom untuk foto aesthetic', cat:'Lainnya', emoji:'📸', sales:89, url:'', status:'active' },
+  ];
+
+  DB.orders = [
+    { id:'ORD-001', name:'Budi Santoso', email:'budi@gmail.com', product:'Ebook Copywriting Pro', amount:97000, method:'QRIS', status:'Lunas', date:'2024-04-14', wa:'081234567890' },
+    { id:'ORD-002', name:'Siti Rahayu', email:'siti@yahoo.com', product:'Template CV Premium', amount:49000, method:'Transfer BCA', status:'Lunas', date:'2024-04-14', wa:'089876543210' },
+    { id:'ORD-003', name:'Ahmad Fauzi', email:'ahmad@gmail.com', product:'Kelas Meta Ads', amount:297000, method:'QRIS', status:'Pending', date:'2024-04-13', wa:'082345678901' },
+    { id:'ORD-004', name:'Maya Putri', email:'maya@email.com', product:'Pack Preset Lightroom', amount:35000, method:'Dana', status:'Lunas', date:'2024-04-13', wa:'085678901234' },
+    { id:'ORD-005', name:'Rizki Pratama', email:'rizki@gmail.com', product:'Ebook Copywriting Pro', amount:97000, method:'OVO', status:'Lunas', date:'2024-04-12', wa:'081298765432' },
+    { id:'ORD-006', name:'Dewi Lestari', email:'dewi@gmail.com', product:'Template CV Premium', amount:49000, method:'QRIS', status:'Pending', date:'2024-04-12', wa:'082198765432' },
+    { id:'ORD-007', name:'Eko Budi', email:'eko@email.com', product:'Kelas Meta Ads', amount:297000, method:'Transfer BNI', status:'Gagal', date:'2024-04-11', wa:'083298765432' },
+    { id:'ORD-008', name:'Ratna Sari', email:'ratna@gmail.com', product:'Pack Preset Lightroom', amount:35000, method:'QRIS', status:'Lunas', date:'2024-04-11', wa:'084398765432' },
+  ];
+
+  DB.courses = [
+    { id:'c1', name:'Kelas Copywriting Pro', desc:'Dari nol jadi master copywriting', price:297000, emoji:'✍️', students:24, modules:[
+      { name:'Modul 1: Dasar Copywriting', lessons:['Pengenalan Copywriting','Formula AIDA','Headline yang Killer'] },
+      { name:'Modul 2: Teknik Lanjutan', lessons:['Storytelling','Social Proof','Call to Action'] },
+    ]},
+  ];
+
+  DB.affiliators = [
+    { name:'Bima Arjuna', email:'bima@gmail.com', clicks:247, conversions:12, commission:580000, status:'Aktif' },
+    { name:'Citra Dewi', email:'citra@gmail.com', clicks:183, conversions:8, commission:320000, status:'Aktif' },
+    { name:'Doni Setiawan', email:'doni@email.com', clicks:54, conversions:2, commission:97000, status:'Pending' },
+  ];
+
+  DB.emails = [
+    { name:'Welcome Email', trigger:'Setelah Pembelian', delay:'0 jam', sent:284, openRate:'42%', status:'Aktif' },
+    { name:'Pengingat Order Pending', trigger:'Order Pending', delay:'2 jam', sent:47, openRate:'28%', status:'Aktif' },
+    { name:'Upsell 7 Hari', trigger:'7 Hari Setelah Beli', delay:'168 jam', sent:156, openRate:'31%', status:'Aktif' },
+  ];
+
+  DB.balance = DB.orders.filter(o=>o.status==='Lunas').reduce((s,o)=>s+o.amount,0) * 0.92;
+  DB.withdrawn = 1250000;
+
+  renderAll();
+}
+
+// ============= RENDER FUNCTIONS =============
+function renderAll() {
+  renderProducts();
+  renderOrders();
+  renderDashboardWidgets();
+  renderCourses();
+  renderAffiliate();
+  renderEmails();
+  renderStats();
+  renderBigChart();
+  renderAnalyticsProducts();
+  renderTrafficSources();
+  renderWD();
+  updateAffLinks();
+}
+
+function renderStats() {
+  const revenue = DB.orders.filter(o=>o.status==='Lunas').reduce((s,o)=>s+o.amount,0);
+  document.getElementById('stat-revenue').textContent = 'Rp '+formatNum(revenue);
+  document.getElementById('stat-orders').textContent = DB.orders.length;
+  document.getElementById('stat-products').textContent = DB.products.length;
+  document.getElementById('stat-balance').textContent = 'Rp '+formatNum(Math.floor(revenue*0.92));
+  document.getElementById('wd-balance').textContent = 'Rp '+formatNum(Math.floor(revenue*0.92));
+  document.getElementById('wd-total').textContent = 'Rp '+formatNum(DB.withdrawn);
+  document.getElementById('orderBadge').textContent = DB.orders.filter(o=>o.status==='Pending').length;
+  document.getElementById('aff-total').textContent = DB.affiliators.length;
+  document.getElementById('aff-paid').textContent = 'Rp '+formatNum(DB.affiliators.reduce((s,a)=>s+a.commission,0));
+}
+
+function renderDashboardWidgets() {
+  // Mini bar chart
+  const vals = [240000,180000,320000,280000,410000,195000,360000];
+  const days = ['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
+  const max = Math.max(...vals);
+  const chartEl = document.getElementById('revenueChart');
+  chartEl.innerHTML = vals.map((v,i) =>
+    `<div class="mini-bar ${i===6?'today':''}" style="height:${Math.round(v/max*100)}%" title="Rp ${formatNum(v)}"></div>`
+  ).join('');
+  document.getElementById('chartDays').innerHTML = days.map(d=>`<span>${d}</span>`).join('');
+
+  // Recent orders
+  const ro = document.getElementById('recentOrdersWidget');
+  ro.innerHTML = DB.orders.slice(0,5).map(o=>`
+    <div style="display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-light);gap:10px">
+      <div style="width:32px;height:32px;background:var(--accent-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px">📦</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${o.name}</div>
+        <div style="font-size:11px;color:var(--text2)">${o.product}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:13px;font-weight:600">Rp ${formatNum(o.amount)}</div>
+        <span class="badge ${o.status==='Lunas'?'badge-green':o.status==='Pending'?'badge-orange':'badge-red'}" style="font-size:10px">${o.status}</span>
+      </div>
+    </div>
+  `).join('');
+
+  // Top products
+  const tp = document.getElementById('topProductsWidget');
+  tp.innerHTML = DB.products.map((p,i)=>`
+    <div style="display:flex;align-items:center;padding:10px 0;border-bottom:1px solid var(--border-light);gap:10px">
+      <div style="font-size:20px">${p.emoji}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:13px;font-weight:500">${p.name}</div>
+        <div style="font-size:11px;color:var(--text2)">${p.sales} terjual</div>
+      </div>
+      <div style="font-size:13px;font-weight:600;color:var(--accent)">Rp ${formatNum(p.price)}</div>
+    </div>
+  `).join('');
+
+  // Activity
+  const acts = [
+    { icon:'💰', msg:'Order baru dari Budi Santoso', time:'2 menit lalu' },
+    { icon:'📧', msg:'Email welcome terkirim ke siti@yahoo.com', time:'15 menit lalu' },
+    { icon:'👥', msg:'Afiliator baru: Bima Arjuna bergabung', time:'1 jam lalu' },
+    { icon:'✅', msg:'Withdrawal Rp 500.000 diproses', time:'3 jam lalu' },
+    { icon:'🎯', msg:'Landing page Ebook Copywriting diperbarui', time:'5 jam lalu' },
+  ];
+  document.getElementById('activityWidget').innerHTML = acts.map(a=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border-light)">
+      <div style="font-size:18px">${a.icon}</div>
+      <div style="flex:1"><div style="font-size:13px">${a.msg}</div></div>
+      <div style="font-size:11px;color:var(--text2);flex-shrink:0">${a.time}</div>
+    </div>
+  `).join('');
+}
+
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  if (!DB.products.length) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📦</div><div class="empty-title">Belum ada produk</div><div class="empty-sub">Tambah produk pertamamu sekarang</div><button class="btn btn-primary" onclick="showModal('addProductModal')">+ Produk Baru</button></div>`;
+    return;
+  }
+  grid.innerHTML = DB.products.map(p => `
+    <div class="product-card">
+      <div class="product-thumb">${p.emoji}</div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-price">Rp ${formatNum(p.price)}
+          ${p.origPrice ? `<span style="font-size:12px;color:var(--text2);text-decoration:line-through;font-weight:400;margin-left:4px">Rp ${formatNum(p.origPrice)}</span>` : ''}
+        </div>
+        <div class="product-meta">
+          <span>📦 ${p.sales} terjual</span>
+          <span>🏷 ${p.cat}</span>
+        </div>
+        <div class="product-actions">
+          <button class="btn btn-secondary btn-xs" onclick="copyCheckoutLink('${p.id}')">🔗 Link</button>
+          <button class="btn btn-secondary btn-xs" onclick="editProduct('${p.id}')">✏️</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteProduct('${p.id}')">🗑</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Update LP product select
+  const sel = document.getElementById('lpProductSelect');
+  sel.innerHTML = '<option value="">Pilih Produk...</option>' + DB.products.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+
+  // Update manual order product select
+  const ms = document.getElementById('manualProduct');
+  if(ms) ms.innerHTML = DB.products.map(p=>`<option value="${p.id}">${p.name} - Rp ${formatNum(p.price)}</option>`).join('');
+}
+
+function renderOrders(filtered) {
+  const data = filtered || DB.orders;
+  const tbody = document.getElementById('ordersBody');
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:var(--text2);padding:40px">Tidak ada order ditemukan</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = data.map(o => `
+    <tr>
+      <td><span style="font-family:'DM Mono',monospace;font-size:12px">${o.id}</span></td>
+      <td><span style="font-weight:500">${o.name}</span></td>
+      <td style="color:var(--text2)">${o.email}</td>
+      <td>${o.product}</td>
+      <td><strong>Rp ${formatNum(o.amount)}</strong></td>
+      <td style="color:var(--text2)">${o.method}</td>
+      <td><span class="badge ${o.status==='Lunas'?'badge-green':o.status==='Pending'?'badge-orange':'badge-red'}">${o.status}</span></td>
+      <td style="color:var(--text2)">${o.date}</td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-secondary btn-xs" onclick="showOrderDetail('${o.id}')">Detail</button>
+          ${o.status==='Pending'?`<button class="btn btn-primary btn-xs" onclick="markLunas('${o.id}')">Lunas</button>`:''}
+          <button class="btn btn-secondary btn-xs" onclick="sendProductEmail('${o.id}')">📧</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderCourses() {
+  const el = document.getElementById('courseList');
+  if (!DB.courses.length) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-icon">🎓</div><div class="empty-title">Belum ada kelas</div><button class="btn btn-primary" onclick="showModal('addCourseModal')">+ Buat Kelas</button></div>`;
+    return;
+  }
+  el.innerHTML = DB.courses.map(c => `
+    <div class="card" style="margin-bottom:16px">
+      <div class="card-header">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="font-size:28px">${c.emoji}</div>
+          <div>
+            <div class="card-title">${c.name}</div>
+            <div style="font-size:12px;color:var(--text2)">${c.students} siswa • Rp ${formatNum(c.price)}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm" onclick="addModule('${c.id}')">+ Modul</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteCourse('${c.id}')">🗑</button>
+        </div>
+      </div>
+      <div class="card-body">
+        ${c.modules.map((m,mi) => `
+          <div class="lms-module">
+            <div class="lms-module-header" onclick="toggleModule(this)">
+              <span>📂 ${m.name}</span>
+              <span style="font-size:12px;color:var(--text2)">${m.lessons.length} lesson ▾</span>
+            </div>
+            <div class="lms-module-body">
+              ${m.lessons.map(l=>`
+                <div class="lms-lesson">
+                  <span>▶️</span>
+                  <span>${l}</span>
+                  <button class="btn btn-danger btn-xs" style="margin-left:auto" onclick="event.stopPropagation()">🗑</button>
+                </div>
+              `).join('')}
+              <button class="btn btn-secondary btn-sm" style="margin-top:8px" onclick="addLesson('${c.id}',${mi})">+ Tambah Lesson</button>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderAffiliate() {
+  const tbody = document.getElementById('affiliatorBody');
+  if (!DB.affiliators.length) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text2);padding:30px">Belum ada afiliator</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = DB.affiliators.map(a => `
+    <tr>
+      <td><strong>${a.name}</strong></td>
+      <td style="color:var(--text2)">${a.email}</td>
+      <td>${a.clicks.toLocaleString()}</td>
+      <td>${a.conversions}</td>
+      <td><strong>Rp ${formatNum(a.commission)}</strong></td>
+      <td><span class="badge ${a.status==='Aktif'?'badge-green':'badge-orange'}">${a.status}</span></td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-secondary btn-xs" onclick="copyAffLink(this,'${a.email}')">🔗 Link</button>
+          <button class="btn btn-danger btn-xs" onclick="removeAffiliator('${a.email}')">🗑</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderEmails() {
+  const tbody = document.getElementById('emailBody');
+  tbody.innerHTML = DB.emails.map(e => `
+    <tr>
+      <td><strong>${e.name}</strong></td>
+      <td>${e.trigger}</td>
+      <td>${e.delay}</td>
+      <td>${e.sent.toLocaleString()}</td>
+      <td>${e.openRate}</td>
+      <td><span class="badge badge-green">${e.status}</span></td>
+      <td>
+        <div style="display:flex;gap:4px">
+          <button class="btn btn-secondary btn-xs">✏️</button>
+          <button class="btn btn-danger btn-xs" onclick="deleteEmail('${e.name}')">🗑</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function renderBigChart() {
+  const el = document.getElementById('bigChart');
+  const vals = Array.from({length:30},()=>Math.floor(Math.random()*500000+50000));
+  const max = Math.max(...vals);
+  el.innerHTML = vals.map((v,i)=>`
+    <div style="flex:1;background:${i===29?'var(--accent)':'var(--accent-light)'};border-radius:3px 3px 0 0;height:${Math.round(v/max*100)}%;transition:height 0.3s" title="Rp ${formatNum(v)}"></div>
+  `).join('');
+}
+
+function renderAnalyticsProducts() {
+  const tbody = document.getElementById('analyticsProductBody');
+  if (!tbody) return;
+  tbody.innerHTML = DB.products.map(p=>`
+    <tr>
+      <td><strong>${p.emoji} ${p.name}</strong></td>
+      <td>${(p.sales*20+Math.floor(Math.random()*200)).toLocaleString()}</td>
+      <td>${p.sales}</td>
+      <td>${(4+Math.random()*3).toFixed(1)}%</td>
+      <td><strong>Rp ${formatNum(p.price*p.sales)}</strong></td>
+    </tr>
+  `).join('');
+}
+
+function renderTrafficSources() {
+  const el = document.getElementById('trafficSources');
+  const sources = [
+    { name:'Meta Ads', val:45, color:'var(--accent)' },
+    { name:'TikTok Ads', val:28, color:'#ff2d55' },
+    { name:'Organik / Direct', val:15, color:'var(--green)' },
+    { name:'Referral / Afiliasi', val:8, color:'var(--purple)' },
+    { name:'Google', val:4, color:'var(--orange)' },
+  ];
+  el.innerHTML = sources.map(s=>`
+    <div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px">
+        <span>${s.name}</span><span style="font-weight:600">${s.val}%</span>
+      </div>
+      <div style="background:var(--surface2);border-radius:4px;height:8px;overflow:hidden">
+        <div style="width:${s.val}%;height:100%;background:${s.color};border-radius:4px;transition:width 0.8s ease"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderWD() {
+  const tbody = document.getElementById('wdHistory');
+  const history = [
+    { date:'2024-04-10', amount:500000, bank:'BCA', status:'Sukses' },
+    { date:'2024-04-05', amount:750000, bank:'BCA', status:'Sukses' },
+  ];
+  tbody.innerHTML = history.map(h=>`
+    <tr>
+      <td>${h.date}</td>
+      <td><strong>Rp ${formatNum(h.amount)}</strong></td>
+      <td>${h.bank}</td>
+      <td><span class="badge badge-green">${h.status}</span></td>
+    </tr>
+  `).join('');
+}
+
+function updateAffLinks() {
+  const el = document.getElementById('affLinks');
+  if (!el) return;
+  el.innerHTML = DB.products.map(p=>`
+    <div style="margin-bottom:12px">
+      <div style="font-size:12px;font-weight:500;margin-bottom:6px">${p.emoji} ${p.name}</div>
+      <div class="affiliate-link-box">
+        <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">https://fincops.id/ref/KODE123/${p.id}</span>
+        <button class="copy-btn" onclick="copyText('https://fincops.id/ref/KODE123/${p.id}')">Copy</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ============= ACTIONS =============
+function showPage(page, el) {
+  document.querySelectorAll('.page-content').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  const titles = { dashboard:'Dashboard', orders:'Order', products:'Produk Digital', landing:'Landing Page Builder', lms:'LMS / Kelas', affiliate:'Afiliasi', analytics:'Analitik', email:'Email Follow-up', settings:'Pengaturan', withdrawal:'Withdrawal' };
+  document.getElementById('topbarTitle').textContent = titles[page] || page;
+  if (page==='analytics') { setTimeout(renderBigChart, 100); }
+}
+
+function showModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function notify(msg, icon) {
+  const t = document.getElementById('notifToast');
+  document.getElementById('notifMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+function formatNum(n) {
+  return n.toLocaleString('id-ID');
+}
+
+function addProduct() {
+  const name = document.getElementById('prodName').value;
+  const price = parseInt(document.getElementById('prodPrice').value);
+  const origPrice = parseInt(document.getElementById('prodOrigPrice').value)||0;
+  const desc = document.getElementById('prodDesc').value;
+  const cat = document.getElementById('prodCat').value;
+  const emoji = document.getElementById('prodEmoji').value || '📦';
+  if (!name || !price) { notify('❌ Nama dan harga wajib diisi!'); return; }
+  const prod = { id:'p'+Date.now(), name, price, origPrice, desc, cat, emoji, sales:0, url:'', status:'active' };
+  DB.products.unshift(prod);
+  closeModal('addProductModal');
+  renderProducts();
+  renderStats();
+  updateAffLinks();
+  notify('✅ Produk "'+name+'" berhasil ditambahkan!');
+  document.getElementById('prodName').value='';
+  document.getElementById('prodPrice').value='';
+  document.getElementById('prodOrigPrice').value='';
+  document.getElementById('prodDesc').value='';
+}
+
+function deleteProduct(id) {
+  if (!confirm('Hapus produk ini?')) return;
+  DB.products = DB.products.filter(p=>p.id!==id);
+  renderProducts(); renderStats(); updateAffLinks();
+  notify('🗑 Produk dihapus');
+}
+
+function editProduct(id) { notify('✏️ Fitur edit akan segera hadir!'); }
+
+function copyCheckoutLink(id) {
+  const p = DB.products.find(x=>x.id===id);
+  copyText(`https://fincops.id/checkout/${id}`);
+}
+
+function filterOrders(q) {
+  const filtered = DB.orders.filter(o=>
+    o.name.toLowerCase().includes(q.toLowerCase()) ||
+    o.email.toLowerCase().includes(q.toLowerCase()) ||
+    o.id.toLowerCase().includes(q.toLowerCase()) ||
+    o.product.toLowerCase().includes(q.toLowerCase())
+  );
+  renderOrders(filtered);
+}
+
+function filterOrderStatus(s) {
+  if (!s) { renderOrders(); return; }
+  renderOrders(DB.orders.filter(o=>o.status===s));
+}
+
+function showOrderDetail(id) {
+  const o = DB.orders.find(x=>x.id===id);
+  document.getElementById('orderDetailTitle').textContent = 'Detail Order '+o.id;
+  document.getElementById('orderDetailBody').innerHTML = `
+    <div class="alert alert-${o.status==='Lunas'?'success':o.status==='Pending'?'info':'error'}">
+      Status: <strong>${o.status}</strong>
+    </div>
+    <div class="grid-2" style="gap:16px;margin-bottom:16px">
+      <div><div style="font-size:11px;color:var(--text2)">ID Order</div><div style="font-family:'DM Mono',monospace;font-weight:500">${o.id}</div></div>
+      <div><div style="font-size:11px;color:var(--text2)">Tanggal</div><div>${o.date}</div></div>
+      <div><div style="font-size:11px;color:var(--text2)">Nama Pembeli</div><div style="font-weight:500">${o.name}</div></div>
+      <div><div style="font-size:11px;color:var(--text2)">Email</div><div>${o.email}</div></div>
+      <div><div style="font-size:11px;color:var(--text2)">WhatsApp</div><div>${o.wa}</div></div>
+      <div><div style="font-size:11px;color:var(--text2)">Metode Bayar</div><div>${o.method}</div></div>
+    </div>
+    <div class="divider"></div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:11px;color:var(--text2)">Produk</div>
+      <div style="font-weight:600;font-size:15px">${o.product}</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:14px;background:var(--surface2);border-radius:10px;margin-bottom:16px">
+      <span style="font-size:13px;color:var(--text2)">Total Pembayaran</span>
+      <span style="font-size:20px;font-weight:700;color:var(--accent)">Rp ${formatNum(o.amount)}</span>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      ${o.status==='Pending'?`<button class="btn btn-primary btn-sm" onclick="markLunas('${o.id}');closeModal('orderDetailModal')">✅ Tandai Lunas</button>`:''}
+      <button class="btn btn-secondary btn-sm" onclick="sendProductEmail('${o.id}')">📧 Kirim Ulang Email</button>
+      <a href="https://wa.me/${o.wa}" target="_blank" class="btn btn-secondary btn-sm">💬 WA Pembeli</a>
+    </div>
+  `;
+  showModal('orderDetailModal');
+}
+
+function markLunas(id) {
+  const o = DB.orders.find(x=>x.id===id);
+  if (o) { o.status='Lunas'; renderOrders(); renderStats(); renderDashboardWidgets(); notify('✅ Order '+id+' ditandai lunas'); }
+}
+
+function sendProductEmail(id) {
+  const o = DB.orders.find(x=>x.id===id);
+  notify('📧 Email produk dikirim ke '+o.email);
+}
+
+function addManualOrder() {
+  const name = document.getElementById('manualName').value;
+  const email = document.getElementById('manualEmail').value;
+  const wa = document.getElementById('manualWA').value;
+  const prodSel = document.getElementById('manualProduct');
+  const status = document.getElementById('manualStatus').value;
+  if (!name||!email) { notify('❌ Isi nama dan email!'); return; }
+  const prod = DB.products[prodSel.selectedIndex];
+  const order = {
+    id:'ORD-'+String(Date.now()).slice(-5),
+    name, email, wa: wa||'-',
+    product: prod?prod.name:'Manual',
+    amount: prod?prod.price:0,
+    method:'Manual',
+    status,
+    date: new Date().toISOString().slice(0,10)
+  };
+  DB.orders.unshift(order);
+  closeModal('addOrderModal');
+  renderOrders(); renderStats(); renderDashboardWidgets();
+  notify('✅ Order manual berhasil ditambahkan!');
+}
+
+function exportOrders() {
+  const header = ['ID','Nama','Email','Produk','Total','Metode','Status','Tanggal'];
+  const rows = DB.orders.map(o=>[o.id,o.name,o.email,o.product,o.amount,o.method,o.status,o.date]);
+  const csv = [header,...rows].map(r=>r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download = 'orders-fincops.csv';
+  a.click();
+  notify('⬇️ Export CSV berhasil!');
+}
+
+// LP BUILDER
+let dragging = null;
+let lpBlocks = [];
+
+function onDragStart(e, type) { dragging = type; }
+
+function onDrop(e) {
+  e.preventDefault();
+  if (!dragging) return;
+  addLPBlock(dragging);
+  dragging = null;
+}
+
+function addLPBlock(type) {
+  const canvas = document.getElementById('lpCanvas');
+  const id = 'block-'+Date.now();
+  
+  const templates = {
+    hero: `<div class="lp-hero"><h1 contenteditable="true">Headline Utama Kamu di Sini</h1><p contenteditable="true">Sub-headline yang menarik perhatian pembeli potensialmu</p><button class="cta" contenteditable="true">Beli Sekarang →</button></div>`,
+    text: `<div class="lp-text-block"><h2 contenteditable="true">Judul Section</h2><p contenteditable="true">Tuliskan konten penjualanmu di sini. Ceritakan manfaat produk, masalah yang diselesaikan, dan kenapa buyer harus segera beli sekarang.</p></div>`,
+    image: `<div class="lp-image-block"><div class="img-placeholder">🖼 Klik untuk upload gambar (fitur upload aktif saat deploy)</div></div>`,
+    cta: `<div class="lp-cta-block"><h2 contenteditable="true">Siap Mulai Sekarang?</h2><p contenteditable="true">Jangan tunda lagi, ambil kesempatanmu hari ini!</p><button contenteditable="true">Dapatkan Akses Sekarang →</button></div>`,
+    countdown: `<div class="lp-countdown-block"><h3 contenteditable="true" style="font-weight:700;margin-bottom:4px">⚡ Penawaran Terbatas!</h3><p style="color:var(--text2);font-size:13px">Harga spesial berakhir dalam:</p><div class="countdown-timers"><div class="countdown-unit"><div class="countdown-num" id="cd-h">02</div><div class="countdown-label">Jam</div></div><div class="countdown-unit"><div class="countdown-num" id="cd-m">47</div><div class="countdown-label">Menit</div></div><div class="countdown-unit"><div class="countdown-num" id="cd-s">33</div><div class="countdown-label">Detik</div></div></div></div>`,
+    testimonial: `<div class="lp-testimonial-block"><h2 contenteditable="true">Apa Kata Mereka?</h2><div class="testimonial-grid"><div class="testi-card"><div class="testi-name">⭐⭐⭐⭐⭐ Budi S.</div><div class="testi-text" contenteditable="true">Produknya sangat membantu! Langsung bisa saya praktek dan hasilnya luar biasa.</div></div><div class="testi-card"><div class="testi-name">⭐⭐⭐⭐⭐ Siti R.</div><div class="testi-text" contenteditable="true">Worth it banget! Ilmunya sangat applicable dan bisa langsung dipraktek.</div></div></div></div>`,
+    faq: `<div class="lp-faq-block"><h2 contenteditable="true">Pertanyaan Umum</h2><div class="faq-item"><div class="faq-q" contenteditable="true">Apakah produk ini cocok untuk pemula?</div><div class="faq-a" contenteditable="true">Ya! Produk ini dirancang dari level pemula hingga mahir dengan penjelasan step by step.</div></div><div class="faq-item"><div class="faq-q" contenteditable="true">Bagaimana cara mengakses produk setelah bayar?</div><div class="faq-a" contenteditable="true">Link akses akan langsung dikirim ke email kamu dalam 1-5 menit setelah pembayaran berhasil.</div></div></div>`,
+    form: `<div style="padding:40px;background:var(--surface2)"><div style="max-width:400px;margin:0 auto;background:white;padding:28px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.08)"><h3 style="font-size:18px;font-weight:700;margin-bottom:4px" contenteditable="true">Pesan Sekarang</h3><p style="font-size:13px;color:var(--text2);margin-bottom:16px" contenteditable="true">Isi form di bawah untuk melanjutkan pemesanan</p><div style="margin-bottom:12px"><label style="font-size:12px;font-weight:500;color:var(--text2)">Nama Lengkap</label><input type="text" placeholder="Nama kamu" style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;margin-top:4px;font-size:14px"></div><div style="margin-bottom:12px"><label style="font-size:12px;font-weight:500;color:var(--text2)">Email</label><input type="email" placeholder="email@kamu.com" style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;margin-top:4px;font-size:14px"></div><div style="margin-bottom:16px"><label style="font-size:12px;font-weight:500;color:var(--text2)">No. WhatsApp</label><input type="text" placeholder="08xxxxxxxxxx" style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;margin-top:4px;font-size:14px"></div><button style="width:100%;padding:13px;background:var(--accent);color:white;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer" contenteditable="true">Bayar Sekarang →</button></div></div>`,
+  };
+
+  // Clear empty state
+  if (canvas.querySelector('.empty-state') || (lpBlocks.length === 0 && canvas.children.length <= 1)) {
+    canvas.innerHTML = '';
+  }
+
+  const div = document.createElement('div');
+  div.className = 'lp-block';
+  div.id = id;
+  div.innerHTML = `
+    <div class="lp-block-controls">
+      <button class="block-ctrl-btn" onclick="moveLPBlock('${id}',-1)" title="Pindah atas">↑</button>
+      <button class="block-ctrl-btn" onclick="moveLPBlock('${id}',1)" title="Pindah bawah">↓</button>
+      <button class="block-ctrl-btn" onclick="deleteLPBlock('${id}')" title="Hapus" style="color:var(--red)">✕</button>
+    </div>
+    ${templates[type] || ''}
+  `;
+  canvas.appendChild(div);
+  lpBlocks.push({id, type});
+  startCountdown();
+}
+
+function deleteLPBlock(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+  lpBlocks = lpBlocks.filter(b=>b.id!==id);
+}
+
+function moveLPBlock(id, dir) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (dir === -1 && el.previousElementSibling) el.parentNode.insertBefore(el, el.previousElementSibling);
+  else if (dir === 1 && el.nextElementSibling) el.parentNode.insertBefore(el.nextElementSibling, el);
+}
+
+function saveLPBlocks() {
+  notify('✅ Landing page berhasil disimpan & dipublish!');
+  const prod = document.getElementById('lpProductSelect').value;
+  if (prod) {
+    const p = DB.products.find(x=>x.id===prod);
+    if (p) document.getElementById('lpList').innerHTML = `<div style="padding:8px;background:var(--green-light);border-radius:6px;color:var(--green);margin-top:4px">✅ ${p.name}</div>`;
+  }
+}
+
+function previewLP() {
+  notify('👁 Preview LP terbuka di tab baru (fitur aktif saat deploy)');
+}
+
+let cdInterval = null;
+function startCountdown() {
+  if (cdInterval) return;
+  let h=2, m=47, s=33;
+  cdInterval = setInterval(() => {
+    s--;
+    if(s<0){s=59;m--;}
+    if(m<0){m=59;h--;}
+    if(h<0){h=0;m=0;s=0;clearInterval(cdInterval);}
+    document.querySelectorAll('#cd-h').forEach(el=>el.textContent=String(h).padStart(2,'0'));
+    document.querySelectorAll('#cd-m').forEach(el=>el.textContent=String(m).padStart(2,'0'));
+    document.querySelectorAll('#cd-s').forEach(el=>el.textContent=String(s).padStart(2,'0'));
+  }, 1000);
+}
+
+// LMS
+function addCourse() {
+  const name = document.getElementById('courseName').value;
+  const desc = document.getElementById('courseDesc').value;
+  const price = parseInt(document.getElementById('coursePrice').value)||0;
+  const emoji = document.getElementById('courseEmoji').value||'🎓';
+  if (!name) { notify('❌ Nama kelas wajib diisi!'); return; }
+  DB.courses.push({ id:'c'+Date.now(), name, desc, price, emoji, students:0, modules:[] });
+  closeModal('addCourseModal');
+  renderCourses();
+  notify('✅ Kelas "'+name+'" berhasil dibuat!');
+}
+
+function deleteCourse(id) {
+  if (!confirm('Hapus kelas ini?')) return;
+  DB.courses = DB.courses.filter(c=>c.id!==id);
+  renderCourses();
+  notify('🗑 Kelas dihapus');
+}
+
+function addModule(courseId) {
+  const name = prompt('Nama modul:');
+  if (!name) return;
+  const c = DB.courses.find(x=>x.id===courseId);
+  if (c) { c.modules.push({name, lessons:[]}); renderCourses(); notify('✅ Modul ditambahkan!'); }
+}
+
+function addLesson(courseId, moduleIdx) {
+  const name = prompt('Nama lesson:');
+  if (!name) return;
+  const c = DB.courses.find(x=>x.id===courseId);
+  if (c) { c.modules[moduleIdx].lessons.push(name); renderCourses(); notify('✅ Lesson ditambahkan!'); }
+}
+
+function toggleModule(el) {
+  const body = el.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+// EMAIL
+function addEmailSeq() {
+  const name = document.getElementById('seqName').value;
+  const trigger = document.getElementById('seqTrigger').value;
+  const delay = document.getElementById('seqDelay').value;
+  if (!name) { notify('❌ Nama sequence wajib diisi!'); return; }
+  DB.emails.push({ name, trigger, delay: delay+' jam', sent:0, openRate:'—', status:'Aktif' });
+  closeModal('addEmailModal');
+  renderEmails();
+  notify('✅ Email sequence "'+name+'" ditambahkan!');
+}
+
+function deleteEmail(name) {
+  DB.emails = DB.emails.filter(e=>e.name!==name);
+  renderEmails();
+  notify('🗑 Email sequence dihapus');
+}
+
+// AFFILIATE
+function saveAffSettings() { notify('✅ Pengaturan afiliasi disimpan!'); }
+function copyAffLink(btn, email) { copyText(`https://fincops.id/ref/${btoa(email).slice(0,8)}`); }
+function removeAffiliator(email) {
+  DB.affiliators = DB.affiliators.filter(a=>a.email!==email);
+  renderAffiliate(); renderStats();
+  notify('🗑 Afiliator dihapus');
+}
+
+// SETTINGS
+function saveSettings() { notify('✅ Pengaturan toko disimpan!'); }
+
+// WITHDRAWAL
+function doWithdrawal() {
+  const amount = parseInt(document.getElementById('wdAmount').value);
+  const account = document.getElementById('wdAccount').value;
+  const name = document.getElementById('wdName').value;
+  if (!amount || amount < 50000) { notify('❌ Minimal withdrawal Rp 50.000!'); return; }
+  if (!account || !name) { notify('❌ Isi data rekening!'); return; }
+  notify('✅ Withdrawal Rp '+formatNum(amount)+' sedang diproses (1-3 hari kerja)');
+  DB.withdrawn += amount;
+  renderStats();
+}
+
+// ANALYTICS TABS
+function switchAnalyticsTab(tab, el) {
+  document.querySelectorAll('#page-analytics .tabs .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('analytics-overview').style.display='none';
+  document.getElementById('analytics-products').style.display='none';
+  document.getElementById('analytics-traffic').style.display='none';
+  document.getElementById('analytics-'+tab).style.display='block';
+  if (tab==='overview') renderBigChart();
+}
+
+// PRODUCT TABS
+function switchProdTab(tab, el) {
+  document.querySelectorAll('#addProductModal .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('prod-tab-digital').style.display='none';
+  document.getElementById('prod-tab-lms').style.display='none';
+  document.getElementById('prod-tab-link').style.display='none';
+  document.getElementById('prod-tab-'+tab).style.display='block';
+}
+
+// UTILS
+function copyText(text) {
+  if (navigator.clipboard) navigator.clipboard.writeText(text);
+  notify('📋 Link berhasil disalin!');
+}
+
+function refreshDashboard() {
+  renderStats();
+  renderDashboardWidgets();
+}
+
+// Close modal on backdrop click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) closeModal(this.id);
+  });
+});
+
+// Keyboard shortcut: Escape to close modal
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));
+});
+</script>
+</body>
+</html>
