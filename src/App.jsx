@@ -7,6 +7,12 @@ import LandingBuilder from './pages/LandingBuilder';
 import LandingPage from './pages/LandingPage';
 import LMS from './pages/LMS';
 import Affiliate from './pages/Affiliate';
+import Orders from './pages/Orders';
+import Analytics from './pages/Analytics';
+import Settings from './pages/Settings';
+import Withdrawal from './pages/Withdrawal';
+import Email from './pages/Email';
+// import ComingSoon from './pages/ComingSoon';
 import { AuthProvider } from './lib/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -42,6 +48,14 @@ function App() {
               <Affiliate />
             </ProtectedRoute>
           } />
+          
+          {/* PHASE 8: NEW MENUS */}
+          <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+          <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />
+          <Route path="/email" element={<ProtectedRoute><Email /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+          <Route path="/withdrawal" element={<ProtectedRoute><Withdrawal /></ProtectedRoute>} />
+          
           <Route path="/checkout/:id" element={<Checkout />} />
           <Route path="/p/:id" element={<LandingPage />} />
         </Routes>

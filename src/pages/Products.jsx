@@ -9,6 +9,7 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   
   // Form State
   const [title, setTitle] = useState('');
@@ -39,26 +40,50 @@ export default function Products() {
   const handleAddProduct = async (e) => {
     e.preventDefault();
     try {
-      const { data, error } = await supabase
-        .from('products')
-        .insert([
-          { 
-            user_id: user.id,
+      if (editingId) {
+         const { data, error } = await supabase
+          .from('products')
+          .update({ 
             title, 
             price: parseFloat(price.replace(/\D/g, '')), 
             description 
-          }
-        ])
-        .select();
-        
-      if (error) throw error;
+          })
+          .eq('id', editingId)
+          .select();
+          
+         if (error) throw error;
+         setProducts(products.map(p => p.id === editingId ? data[0] : p));
+      } else {
+         const { data, error } = await supabase
+          .from('products')
+          .insert([
+            { 
+              user_id: user.id,
+              title, 
+              price: parseFloat(price.replace(/\D/g, '')), 
+              description 
+            }
+          ])
+          .select();
+          
+         if (error) throw error;
+         setProducts([...data, ...products]);
+      }
       
-      setProducts([...data, ...products]);
       setIsModalOpen(false);
+      setEditingId(null);
       setTitle(''); setPrice(''); setDescription('');
     } catch (error) {
       alert(error.message);
     }
+  };
+
+  const openEditModal = (product) => {
+    setEditingId(product.id);
+    setTitle(product.title);
+    setPrice(product.price.toString());
+    setDescription(product.description || '');
+    setIsModalOpen(true);
   };
 
   const handleDelete = async (id) => {
@@ -73,7 +98,11 @@ export default function Products() {
   };
 
   const actionButton = (
-    <button className="btn btn-primary btn-sm" onClick={() => setIsModalOpen(true)}>
+    <button className="btn btn-primary btn-sm" onClick={() => {
+      setEditingId(null);
+      setTitle(''); setPrice(''); setDescription('');
+      setIsModalOpen(true);
+    }}>
       <Plus size={16} style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '4px'}}/> Produk Baru
     </button>
   );
@@ -113,7 +142,7 @@ export default function Products() {
               <p style={{fontSize: '13px', color: 'var(--text2)', marginBottom: '16px'}}>{product.description || 'Tidak ada deskripsi.'}</p>
               
               <div style={{display: 'flex', gap: '8px'}}>
-                <button className="btn btn-secondary btn-sm" style={{flex: 1}}><Edit size={14} style={{verticalAlign: 'text-bottom'}} /> Edit</button>
+                <button className="btn btn-secondary btn-sm" style={{flex: 1}} onClick={() => openEditModal(product)}><Edit size={14} style={{verticalAlign: 'text-bottom'}} /> Edit</button>
                 <button className="btn btn-danger btn-sm" onClick={() => handleDelete(product.id)}><Trash size={14} style={{verticalAlign: 'text-bottom'}} /></button>
               </div>
             </div>
@@ -149,7 +178,7 @@ export default function Products() {
               </div>
               <div style={{display: 'flex', gap: '10px', justifyContent: 'flex-end', marginTop: '24px'}}>
                 <button type="button" className="btn btn-secondary" onClick={() => setIsModalOpen(false)}>Batal</button>
-                <button type="submit" className="btn btn-primary">Simpan Produk</button>
+                <button type="submit" className="btn btn-primary">{editingId ? 'Update Produk' : 'Simpan Produk'}</button>
               </div>
             </form>
           </div>

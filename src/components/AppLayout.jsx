@@ -94,11 +94,11 @@ export default function AppLayout({ children, title = 'Dashboard', actionButton 
         <div className="topbar">
           <div className="topbar-title">{title}</div>
           <div className="topbar-actions">
-            <button className="btn btn-secondary btn-sm" onClick={() => alert('Tidak ada notifikasi baru')}>
+            <button className="btn btn-secondary btn-sm" onClick={() => alert('Fitur Notifikasi akan hadir pada versi mendatang.')}>
               <Bell size={16} />
             </button>
             {actionButton || (
-              <button className="btn btn-primary btn-sm" onClick={() => alert('Fungsi Produk Baru belum aktif')}>
+              <button className="btn btn-primary btn-sm" onClick={() => navigate('/products')}>
                 <Plus size={16} style={{display: 'inline-block', verticalAlign: 'middle', marginRight: '4px'}}/> Produk Baru
               </button>
             )}

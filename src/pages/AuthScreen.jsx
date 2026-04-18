@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../lib/AuthContext';
+import { supabase } from '../lib/supabase';
 
 export default function AuthScreen() {
   const [screen, setScreen] = useState('login');
@@ -11,6 +12,8 @@ export default function AuthScreen() {
   
   const navigate = useNavigate();
   const { signIn, signUp, user } = useAuth();
+
+  const [resetEmail, setResetEmail] = useState('');
 
   useEffect(() => {
     if (user) {
@@ -125,12 +128,25 @@ export default function AuthScreen() {
             <div className="auth-title">Reset Password</div>
             <div className="auth-sub">Masukkan email untuk mendapat link reset</div>
             
-            <form onSubmit={(e) => { e.preventDefault(); alert('Kirim link reset (Belum Terhubung)'); }}>
+            <form onSubmit={async (e) => { 
+              e.preventDefault(); 
+              setLoading(true);
+              try {
+                const { error } = await supabase.auth.resetPasswordForEmail(resetEmail);
+                if (error) throw error;
+                alert('Jika email terdaftar, tautan reset telah dikirim.');
+                setScreen('login');
+              } catch (err) {
+                alert(err.message);
+              } finally {
+                setLoading(false);
+              }
+            }}>
               <div className="form-group">
                 <label>Email</label>
-                <input type="email" placeholder="email@kamu.com" />
+                <input type="email" placeholder="email@kamu.com" required value={resetEmail} onChange={e=>setResetEmail(e.target.value)} />
               </div>
-              <button type="submit" className="btn btn-primary">Kirim Link Reset</button>
+              <button type="submit" className="btn btn-primary" disabled={loading}>{loading ? 'Memproses...' : 'Kirim Link Reset'}</button>
             </form>
             
             <div className="auth-switch"><a onClick={() => setScreen('login')}>← Kembali ke login</a></div>
